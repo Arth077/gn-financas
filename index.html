@@ -166,40 +166,17 @@
         <!-- MOLDURA DO APLICATIVO DE CELULAR (Fiel à imagem de referência) -->
         <main id="appContainer" class="phone-shell bg-[#1A120E] text-[#D5C4AE] relative flex flex-col overflow-hidden">
 
-            <!-- Barra de Status Superior -->
-            <div class="px-7 pt-3 pb-1 flex items-center justify-between text-xs font-semibold text-[#D5C4AE]/80 shrink-0">
-                <span id="statusBarClock" class="font-mono">09:41</span>
-                <div class="flex items-center gap-1.5">
-                    <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 16 16">
-                        <rect x="1" y="11" width="2.2" height="4" rx="0.6"/>
-                        <rect x="4.5" y="8.5" width="2.2" height="6.5" rx="0.6"/>
-                        <rect x="8" y="5.5" width="2.2" height="9.5" rx="0.6"/>
-                        <rect x="11.5" y="2.5" width="2.2" height="12.5" rx="0.6"/>
-                    </svg>
-                    <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 16 16">
-                        <path d="M8 13.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm-3.6-2.3a5.2 5.2 0 0 1 7.2 0 .75.75 0 0 0 1.05-1.07 6.7 6.7 0 0 0-9.3 0 .75.75 0 0 0 1.05 1.07zm-2.5-2.5a8.7 8.7 0 0 1 12.2 0 .75.75 0 1 0 1.05-1.06 10.2 10.2 0 0 0-14.3 0 .75.75 0 1 0 1.05 1.06z"/>
-                    </svg>
-                    <div class="w-5 h-2.5 border border-[#D5C4AE]/80 rounded-[3px] p-[1.5px] flex items-center">
-                        <div class="w-full h-full bg-[#D5C4AE] rounded-[1px]"></div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Área Rolável Principal do Aplicativo -->
-            <div id="mainScrollArea" class="flex-1 overflow-y-auto no-scrollbar px-6 pt-3 pb-28">
+            <div id="mainScrollArea" class="flex-1 overflow-y-auto no-scrollbar px-6 pt-6 pb-28">
 
-                <!-- 1. TOP HEADER (Saudação dinâmica por horário, sem "Bem-vindo" e sem sino de notificação) -->
+                <!-- 1. TOP HEADER (Saudação dinâmica por horário, sem texto extra acima e apenas 1 ponto verde no botão Ajuda) -->
                 <header class="flex items-center justify-between mb-5">
                     <div class="flex items-center gap-3">
                         <div class="w-11 h-11 rounded-full bg-[#312418] border-2 border-[#6B4A2E] flex items-center justify-center text-[#F5EDE2] font-display font-extrabold text-sm shadow-md">
                             GN
                         </div>
                         <div>
-                            <div class="flex items-center gap-1.5">
-                                <span id="greetingPeriodLabel" class="text-[11px] uppercase tracking-wider text-[#D5C4AE]/65 font-semibold">Gestão Financeira</span>
-                                <span id="syncBadgeMobile" class="w-1.5 h-1.5 rounded-full bg-[#4ADE80]" title="Salvo automaticamente"></span>
-                            </div>
-                            <h1 id="userNameDisplay" class="font-display font-bold text-lg text-[#F5EDE2] tracking-tight leading-tight">Boa noite, Senhor</h1>
+                            <h1 id="userNameDisplay" class="font-display font-bold text-lg text-[#F5EDE2] tracking-tight leading-tight">Boa tarde, Senhor</h1>
                         </div>
                     </div>
 
@@ -216,22 +193,28 @@
                 <!-- ABA 1: TELA INICIAL (HOME - Segue o layout da referência sem o olho de esconder saldo) -->
                 <section id="tab-inicio" class="space-y-6">
 
-                    <!-- 2. HERO BALANCE SECTION (Saldo Mensal Sempre Visível) -->
+                    <!-- 2. HERO BALANCE SECTION (Saldo Mensal Sempre Visível + Lápis para editar livremente) -->
                     <div class="pt-1">
                         <div class="flex items-center gap-2 mb-1">
                             <span class="text-[11px] font-semibold uppercase tracking-wider text-[#D5C4AE]/70">
                                 SALDO MENSAL ATUALIZADO • BASE <span id="baseSalaryLabel" class="text-[#D5C4AE] font-mono">R$ 1.200,00</span>
                             </span>
-                            <span class="w-2 h-2 rounded-full bg-[#4ADE80] status-dot inline-block"></span>
                         </div>
 
-                        <!-- Valor Principal Grande (Sem botão de olho, sempre visível) -->
-                        <div class="flex items-center my-1">
+                        <!-- Valor Principal Grande + Botão de Lápis para alterar livremente -->
+                        <div class="flex items-center gap-3 my-1">
                             <div id="heroBalanceWrapper" class="font-display font-extrabold tracking-tight flex items-baseline">
                                 <span class="text-2xl sm:text-3xl text-[#D5C4AE] mr-1.5 font-bold">R$</span>
                                 <span id="heroBalanceMain" class="text-4xl sm:text-[44px] leading-none text-[#F5EDE2] font-mono">1.200</span>
                                 <span id="heroBalanceCents" class="text-2xl sm:text-[26px] text-[#D5C4AE]/60 font-mono">,00</span>
                             </div>
+
+                            <!-- Ícone de Lápis para editar o saldo livremente -->
+                            <button onclick="openEditBalanceModal()" class="tap-card w-9 h-9 rounded-full bg-[#312418] border border-[#6B4A2E] flex items-center justify-center text-[#D5C4AE] hover:text-[#F5EDE2] hover:bg-[#6B4A2E]/50 shadow-md" title="Alterar saldo livremente">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                </svg>
+                            </button>
                         </div>
 
                         <div class="flex items-center gap-1.5 text-xs text-[#D5C4AE]/70 mt-1.5">
@@ -596,6 +579,34 @@
                         </button>
                         <button onclick="saveNewItem()" class="flex-1 py-3 rounded-xl bg-[#6B4A2E] text-[#F5EDE2] text-xs font-bold shadow-lg">
                             Confirmar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL NOVO: EDITAR O SALDO LIVREMENTE PELO ÍCONE DE LÁPIS -->
+            <div id="editBalanceModal" class="hidden absolute inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+                <div class="w-full bg-[#312418] border-t sm:border border-[#6B4A2E] rounded-t-3xl sm:rounded-3xl p-5 space-y-4 animate-pop">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-display font-bold text-lg text-[#F5EDE2]">Alterar Saldo Atual</h3>
+                        <button onclick="closeEditBalanceModal()" class="w-8 h-8 rounded-full bg-[#1A120E] text-[#D5C4AE] flex items-center justify-center">✕</button>
+                    </div>
+
+                    <p class="text-xs text-[#D5C4AE]/85 bg-[#1A120E]/60 p-3 rounded-xl border border-[#6B4A2E]/30 leading-relaxed">
+                        Senhor, digite abaixo o valor exato que deseja definir para o seu saldo disponível agora. As próximas contas que marcar como pagas serão descontadas a partir deste valor.
+                    </p>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-[#D5C4AE]/80 mb-1.5">Novo Valor do Saldo (R$)</label>
+                        <input id="directBalanceInput" type="number" step="0.01" inputmode="decimal" placeholder="Ex: 1200,00" class="w-full bg-[#1A120E] border border-[#6B4A2E] rounded-xl px-3.5 py-3 text-base font-mono text-[#F5EDE2] placeholder-[#D5C4AE]/40 focus:outline-none focus:border-[#D5C4AE]">
+                    </div>
+
+                    <div class="flex gap-2 pt-1">
+                        <button onclick="closeEditBalanceModal()" class="flex-1 py-3 rounded-xl bg-[#1A120E] text-[#D5C4AE] text-xs font-bold">
+                            Cancelar
+                        </button>
+                        <button onclick="saveDirectBalance()" class="flex-1 py-3 rounded-xl bg-[#6B4A2E] text-[#F5EDE2] text-xs font-bold shadow-lg">
+                            Salvar Saldo
                         </button>
                     </div>
                 </div>
@@ -1250,6 +1261,45 @@
             }
         }
 
+        function openEditBalanceModal() {
+            const totals = calculateTotals();
+            const input = document.getElementById('directBalanceInput');
+            if (input) {
+                input.value = totals.currentAvailableBalance.toFixed(2);
+            }
+            document.getElementById('editBalanceModal').classList.remove('hidden');
+            setTimeout(() => {
+                if (input) {
+                    input.focus();
+                    input.select();
+                }
+            }, 100);
+        }
+
+        function closeEditBalanceModal() {
+            document.getElementById('editBalanceModal').classList.add('hidden');
+        }
+
+        function saveDirectBalance() {
+            const rawVal = document.getElementById('directBalanceInput').value.replace(',', '.');
+            const desiredBalance = parseFloat(rawVal);
+
+            if (isNaN(desiredBalance)) {
+                showToast('⚠️ Informe um valor válido, Senhor.');
+                return;
+            }
+
+            // Ajusta a base para que o saldo disponível (após os descontos já pagos) fique exatamente no valor escolhido pelo Senhor
+            const totals = calculateTotals();
+            state.extraIncome = 0;
+            state.baseSalary = desiredBalance + totals.totalAlreadySpent;
+
+            saveState();
+            renderApp();
+            closeEditBalanceModal();
+            showToast('✓ Saldo atualizado para R$ ' + formatBRL(desiredBalance));
+        }
+
         function saveSettingsExtraIncome() {
             const val = parseFloat(document.getElementById('settingsExtraIncomeInput').value) || 0;
             state.extraIncome = Math.max(0, val);
@@ -1306,18 +1356,9 @@
         }
 
         function updateClockAndGreeting() {
-            const now = new Date();
-            const hh = String(now.getHours()).padStart(2, '0');
-            const mm = String(now.getMinutes()).padStart(2, '0');
-            const clockEl = document.getElementById('statusBarClock');
-            if (clockEl) clockEl.textContent = `${hh}:${mm}`;
-
-            const { greeting, periodLabel } = getTimeBasedGreeting();
+            const { greeting } = getTimeBasedGreeting();
             const userNameEl = document.getElementById('userNameDisplay');
             if (userNameEl) userNameEl.textContent = greeting;
-
-            const periodEl = document.getElementById('greetingPeriodLabel');
-            if (periodEl) periodEl.textContent = periodLabel;
         }
 
         /* ============================================================================
